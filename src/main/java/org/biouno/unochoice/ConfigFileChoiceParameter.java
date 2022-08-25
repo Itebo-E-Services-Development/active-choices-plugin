@@ -49,9 +49,14 @@ public class ConfigFileChoiceParameter extends AbstractUnoChoiceParameter implem
     private final String choiceType;
 
     /**
-     * Choice type.
+     * Config File id.
      */
     private String configFileId;
+
+    /**
+     * Config File id.
+     */
+    private Integer visibleItemCount;
 
     /**
      * Filter flag.
@@ -98,6 +103,15 @@ public class ConfigFileChoiceParameter extends AbstractUnoChoiceParameter implem
     public void setConfigFileId(String configFileId) {
         this.configFileId = configFileId;
         LOGGER.severe("configFileId: "+configFileId+"; ");
+    }
+
+    public Integer getVisibleItemCount() {
+        return visibleItemCount;
+    }
+
+    @DataBoundSetter
+    public void setVisibleItemCount(Integer visibleItemCount) {
+        this.visibleItemCount = visibleItemCount;
     }
 
     /*
