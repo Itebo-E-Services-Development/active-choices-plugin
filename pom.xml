@@ -153,6 +153,11 @@
             <artifactId>workflow-basic-steps</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>config-file-provider</artifactId>
+            <version>3.10.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -187,6 +192,13 @@
                 <extensions>true</extensions>
                 <configuration>
                     <compatibleSinceVersion>2.0</compatibleSinceVersion>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
         </plugins>
