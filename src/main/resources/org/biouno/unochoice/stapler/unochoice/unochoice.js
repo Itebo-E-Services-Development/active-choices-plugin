@@ -817,14 +817,14 @@ var UnoChoice = UnoChoice || (function($) {
             }
             var tagName = filteredElement.tagName;
             if (tagName === 'SELECT') { // handle SELECT's
-               jQuery(filteredElement).children().remove();
-               for (var i = 0; i < newOptions.length ; ++i) {
-                   var opt = document.createElement('option');
-                   opt.value = newOptions[i].value;
-                   opt.innerHTML = newOptions[i].innerHTML;
-                   jQuery(filteredElement).append(opt);
-               }
-            } else if (tagName === 'DIV' || tagName === 'SPAN') { // handle CHECKBOXES, RADIOBOXES and other elements (Jenkins renders them as tables)
+                jQuery(filteredElement).children().each(function(e) {
+                    if (newOptions.some(o => o.value === this.value)) {
+                        $(this).show()
+                    } else {
+                        $(this).hide()
+                    }
+                })
+            } else if (tagName === 'DIV') { // handle CHECKBOXES, RADIOBOXES and other elements (Jenkins renders them as tables)
                 if (jQuery(filteredElement).children().length > 0 && jQuery(filteredElement).children()[0].tagName === 'TABLE') {
                     var table = filteredElement.children[0];
                     var tbody = table.children[0];
