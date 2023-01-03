@@ -23,6 +23,7 @@
  */
 
 package org.biouno.unochoice;
+import org.jenkinsci.Symbol;
 import org.jenkinsci.plugins.configfiles.GlobalConfigFiles;
 import org.jenkinsci.lib.configprovider.model.Config;
 
@@ -67,31 +68,21 @@ public class ConfigFileChoiceParameter extends AbstractUnoChoiceParameter implem
      * Filter length. Defines a minimum number of characters that must be entered before the filter
      * is activated.
      */
-    private final Integer filterLength;
+    private Integer filterLength;
 
     /**
      * Constructor called from Jelly with parameters.
      * @param name name
      * @param description description
-     * @param randomName parameter random generated name
-     * @param configFileId configFileId
      * @param choiceType choice type
      * @param filterable filter flag
-     * @param filterLength length when filter start filtering
      */
     @DataBoundConstructor
-    public ConfigFileChoiceParameter(String name, String description, String randomName, String choiceType,
-                                     Boolean filterable, Integer filterLength) {
-        super(name, description, randomName);
-        LOGGER.severe("name: "+name+"; ");
-        LOGGER.severe("description: "+description+"; ");
-        LOGGER.severe("randomName: "+randomName+"; ");
-        LOGGER.severe("choiceType: "+choiceType+"; ");
-        LOGGER.severe("filterable: "+filterable+"; ");
-        LOGGER.severe("filterLength: "+filterLength+"; ");
+    public ConfigFileChoiceParameter(String name, String description, String choiceType,
+                                     Boolean filterable, String configFileId) {
+        super(name, description);
         this.choiceType = StringUtils.defaultIfBlank(choiceType, PARAMETER_TYPE_SINGLE_SELECT);
         this.filterable = filterable;
-        this.filterLength = filterLength;
         this.configFileId = configFileId;
     }
 
@@ -139,7 +130,10 @@ public class ConfigFileChoiceParameter extends AbstractUnoChoiceParameter implem
         return filterLength == null ? (Integer) 1 : filterLength;
     }
 
-
+    @DataBoundSetter
+    public void setFilterLength(final Integer filterLength) {
+        this.filterLength = filterLength;
+    }
 
     @Override
     public Map<Object, Object> getChoices(Map<Object, Object> parameters) {
@@ -168,12 +162,13 @@ public class ConfigFileChoiceParameter extends AbstractUnoChoiceParameter implem
 
     // --- descriptor
 
+    @Symbol("configFileChoiceParameter")
     @Extension
-    public static final class DescriptImpl extends UnoChoiceParameterDescriptor {
+    public static final class DescriptImpl extends ParameterDescriptor {
 
         @Override
         public String getDisplayName() {
-            return "Active Choices Parameter";
+            return "Config File Choices Parameter";
         }
 
     }
